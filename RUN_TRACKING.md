@@ -339,9 +339,25 @@ Required for 1-page PDF:
 
 Run 4 produces best results so far at 69%
 
-================================================================================
-END OF TRACKING
-================================================================================
+===============================================================================
+RUN 5 PLAN: TARGET 93%
+===============================================================================
 
-Last Updated: 2026-04-25 (before session death)
-Current Status: Awaiting GPU to complete Run 4
+**Date**: 2026-05-08
+**Target**: 93% validation accuracy
+**Strategy**:
+- Architecture: 2 conv layers per block, 32→64→128→256 filters
+- Head: Dense(512) → Dense(256) for extra capacity
+- Optimizer: SGD (momentum=0.9) with CosineDecay LR (0.01 → 1e-5)
+- Label smoothing: 0.1
+- Dropout: increased (0.25, 0.35, 0.5, 0.5 conv; 0.5, 0.3 dense)
+- Epochs: 100 per run × 10 runs
+- Ensemble: top 3 models averaged
+- Status: Notebook ready, awaiting Colab GPU
+
+===============================================================================
+END OF TRACKING
+===============================================================================
+
+Last Updated: 2026-05-08
+Current Status: Run 5 notebook ready for Colab T4 GPU
