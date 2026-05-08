@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Jupyter
+.cache/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# TensorFlow / Keras
+*.keras
+saved_model/
+
+# Dataset (large, downloaded externally)
+egyptian-new-currency-2023/
+
+# GPU / CUDA
+cuda/
+
+# Temp
+temp/
+tmp/
