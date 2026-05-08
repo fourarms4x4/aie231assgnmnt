@@ -8,19 +8,19 @@ for c in nb["cells"]:
         c["execution_count"] = None
         c["outputs"] = []
 
-# Cell 5: Run 4 training loop - skip to just runs 9-10
+# Cell 5: Run 4 training loop - skip entirely
 cell5 = nb["cells"][5]
-old = "".join(cell5["source"])
-if "NUM_RUNS = 10" in old:
-    new = old.replace(
-        "for run_num in range(1, NUM_RUNS + 1):",
-        "# Runs 1-8 already done, completing 9-10\nfor run_num in range(9, NUM_RUNS + 1):",
-    )
-    cell5["source"] = [new]
+cell5["source"] = ['print("Run 4 already completed in previous session. Skipping to Run 5.")\n']
 
-# Cell 14: Run 5 training loop - add auto-save progress
+# Cell 14: Run 5 training loop - reduce to 5 runs x 30 epochs
 cell14 = nb["cells"][14]
 old14 = "".join(cell14["source"])
+
+# Reduce settings
+old14 = old14.replace("NUM_RUNS_5 = 10", "NUM_RUNS_5 = 5")
+old14 = old14.replace("EPOCHS_5 = 100", "EPOCHS_5 = 30")
+
+# Add auto-save hook
 save_hook = """
     # auto-save progress
     import json as _js
@@ -28,10 +28,17 @@ save_hook = """
         _js.dump({"best_acc": best5_acc, "best_run": best5_run, "runs": all5_metrics, "current_run": run_num}, _f)
 """
 if "auto-save" not in old14:
-    cell14["source"] = cell14["source"] + [save_hook]
+    old14 += save_hook
+
+cell14["source"] = [old14]
 
 with open("aie231assgnmnt3.ipynb", "w", encoding="utf-8") as f:
     json.dump(nb, f, indent=1, ensure_ascii=False)
 
+import os
+if os.path.exists("run5_progress.json"):
+    os.remove("run5_progress.json")
+
 print("Done. Cells:", len(nb["cells"]))
-print("All outputs cleared, auto-save added to Run 5")
+print("Run 4: SKIPPED")
+print("Run 5: 5 runs x 30 epochs (fast mode)")
